@@ -87,18 +87,30 @@ def pre():
         elif k['职务'][i].find('保洁') != -1:
             s[i].job = baojie
         elif k['职务'][i].find('舞') != -1:
+            if k['职务'][i].find('兼职') == -1:
+                s[i].is_formal_teacher = 1
             s[i].job = wudaolaoshi
         elif k['职务'][i].find('模特') != -1:
+            if k['职务'][i].find('兼职') == -1:
+                s[i].is_formal_teacher = 1
             s[i].job = motelaoshi
         elif k['职务'][i].find('主持') != -1:
+            if k['职务'][i].find('兼职') == -1:
+                s[i].is_formal_teacher = 1
             s[i].job = zhuchilaoshi
         elif k['职务'][i].find('拉丁') != -1:
+            if k['职务'][i].find('兼职') == -1:
+                s[i].is_formal_teacher = 1
             s[i].job = ladinglaoshi
         elif k['职务'][i].find('负责人') != -1:
             s[i].job = fuzeren
         elif k['职务'][i].find('钢琴') != -1:
+            if k['职务'][i].find('兼职') == -1:
+                s[i].is_formal_teacher = 1
             s[i].job = gangqinlaoshi
         elif k['职务'][i].find('画') != -1:
+            if k['职务'][i].find('兼职') == -1:
+                s[i].is_formal_teacher = 1
             s[i].job = huihualaoshi
         elif k['职务'][i].find('前台') != -1:
             s[i].job = qiantai
@@ -109,7 +121,11 @@ def pre():
         elif k['职务'][i].find('创始人') != -1:
             s[i].job = chaungshiren
         elif k['职务'][i].find('书法') != -1:
+            if k['职务'][i].find('兼职') == -1:
+                s[i].is_formal_teacher = 1
             s[i].job = shufalaoshi
+        if k['职务'][i].find('教务') != -1:
+            s[i].jiaowu_teacher = 1
     for i in range(len(s)):
         classes = 0
         if s[i].name.find('小雨') != -1:
@@ -117,7 +133,7 @@ def pre():
             s[i].tiyanke += 25
         if s[i].name.find('高*爽') != -1:
             s[i].zhengshike += 86.5
-            s[i].zhengshikekeshifei += 43250
+            s[i].Commission += 43250
         if s[i].name.find('董*理') != -1:
             s[i].zhengshike += 6
         if s[i].name.find('周*琳') != -1:
@@ -127,8 +143,8 @@ def pre():
             s[i].zhengshike += 85
         if s[i].name.find('wa') != -1:
             s[i].zhengshike += 80
-            s[i].zhengshikekeshifei += 9600
-            s[i].zhengshikekeshifei += 2280
+            s[i].Commission += 9600
+            s[i].Commission += 2280
         if s[i].name.find('孙*彬') != -1:
             s[i].zhengshike += 74
         if s[i].name.find('贾') != -1:
@@ -160,7 +176,7 @@ def pre():
             s[i].zhengshike += 54
         if s[i].name.find('沈') != -1 and s[i].job == wudaolaoshi:
             s[i].zhengshike += 108
-            s[i].zhengshikekeshifei += 12960
+            s[i].Commission += 12960
         if s[i].name.find('孙') != -1 and s[i].job == wudaolaoshi:
             s[i].zhengshike += 8
         if s[i].name.find('梁') != -1:
@@ -174,7 +190,7 @@ def pre():
             s[i].zhengshike += 15
         if s[i].name.find('wa') != -1:
             s[i].zhengshike += 40.5
-            s[i].zhengshikekeshifei += 4860
+            s[i].Commission += 4860
         if s[i].name.find('毛') != -1:
             s[i].zhengshike += 28
         if s[i].name.find('周*雅') != -1:
@@ -184,7 +200,7 @@ def pre():
         if (s[i].name.find('黄') != -1 and
                 s[i].job == wudaolaoshi and s[i].place == wenchenglu):
             s[i].zhengshike += 64
-            s[i].zhengshikekeshifei += 7680
+            s[i].Commission += 7680
         if s[i].name.find('高') != -1 and s[i].job == huihualaoshi:
             s[i].zhengshike += 71
         if s[i].job == baojie:
@@ -204,7 +220,7 @@ def pre():
             s[i].shitingke += 11
             s[i].zhengshike += 27
             s[i].bonus += 240
-            s[i].zhengshikekeshifei += 3240
+            s[i].Commission += 3240
             s[i].bonus += 660
             s[i].bonus += 540
         if s[i].name.find('董') != -1 and s[i].job == wudaolaoshi:
@@ -243,41 +259,71 @@ def pre():
             s[i].base_salary += 0
             s[i].Commission += 0.5 * s[i].xiaokejine
         elif s[i].job == wudaolaoshi:
+            s[i].tiyankekeshifei = 60
             if s[i].is_formal_teacher:
                 s[i].base_salary += 3000
+                s[i].zhengshikekeshifei = 120
             if s[i].jiaowu_teacher:
                 s[i].base_salary += 1000
-            # 某节课某班级人数 >= 4 以及刚开班前两个月 待定
-                # if s[i].yuexiaoke > 1000:
-                #     s[i].zhengshikekeshifei += 60
-                #     s[i].bonus += 2000
-                # elif s[i].yuexiaoke > 900:
-                #     s[i].zhengshikekeshifei += 50
-                #     s[i].bonus += 2000
-                # elif s[i].yuexiaoke > 800:
-                #     s[i].zhengshikekeshifei += 40
-                #     s[i].bonus += 1500
-                # elif s[i].yuexiaoke > 700:
-                #     s[i].zhengshikekeshifei += 30
-                #     s[i].bonus += 1000
-                # elif s[i].yuexiaoke > 600:
-                #     s[i].zhengshikekeshifei += 20
-                #     s[i].bonus += 500
-                # elif s[i].yuexiaoke > 500:
-                #     s[i].zhengshikekeshifei += 10
-            # 班级人数 < 4 待定
-            s[i].base_salary += s[i].tiyanke * 60
-            s[i].base_salary += s[i].xinsheng_above24 * 80
-            s[i].base_salary += s[i].xinsheng_below24 * 40
-            s[i].base_salary += s[i].xufei * 30
+                s[i].zhengshikekeshifei = 140
+
+            if s[i].yuexiaoke > 1000:
+                s[i].zhengshikekeshifei += 60
+                s[i].bonus += 2000
+            elif s[i].yuexiaoke > 900:
+                s[i].zhengshikekeshifei += 50
+                s[i].bonus += 2000
+            elif s[i].yuexiaoke > 800:
+                s[i].zhengshikekeshifei += 40
+                s[i].bonus += 1500
+            elif s[i].yuexiaoke > 700:
+                s[i].zhengshikekeshifei += 30
+                s[i].bonus += 1000
+            elif s[i].yuexiaoke > 600:
+                s[i].zhengshikekeshifei += 20
+                s[i].bonus += 500
+            elif s[i].yuexiaoke > 500:
+                s[i].zhengshikekeshifei += 10
+            s[i].Commission += s[i].zhengshike * s[i].zhengshikekeshifei
+
+            s[i].Commission += s[i].tiyanke * 60
+            s[i].Commission += s[i].xinsheng_above24 * 80
+            s[i].Commission += s[i].xinsheng_below24 * 40
+            s[i].Commission += s[i].xufei * 30
 
         elif s[i].job == zhuchilaoshi or s[i].job == motelaoshi:
             if s[i].is_formal_teacher:
                 s[i].base_salary += 3000
             if s[i].jiaowu_teacher:
                 s[i].base_salary += 1000
+            s[i].tiyankekeshifei = 80
+            s[i].zhengshikekeshifei = 160
+            s[i].Commission += s[i].xinsheng_above24 * 120
+            s[i].Commission += s[i].xinsheng_below24 * 60
+            s[i].Commission += s[i].xufei * 50
+            if s[i].yuexiaoke > 800:
+                s[i].zhengshikekeshifei += 50
+            elif s[i].yuexiaoke > 750:
+                s[i].zhengshikekeshifei += 45
+            elif s[i].yuexiaoke > 700:
+                s[i].zhengshikekeshifei += 40
+            elif s[i].yuexiaoke > 650:
+                s[i].zhengshikekeshifei += 35
+            elif s[i].yuexiaoke > 600:
+                s[i].zhengshikekeshifei += 30
+            elif s[i].yuexiaoke > 550:
+                s[i].zhengshikekeshifei += 25
+            elif s[i].yuexiaoke > 500:
+                s[i].zhengshikekeshifei += 20
+            elif s[i].yuexiaoke > 450:
+                s[i].zhengshikekeshifei += 15
+            elif s[i].yuexiaoke > 400:
+                s[i].zhengshikekeshifei += 10
+            s[i].Commission += s[i].zhengshike * s[i].zhengshikekeshifei
+
+        s[i].ans = s[i].base_salary + s[i].bonus + s[i].Commission
     for i in s:
-        print(i.name, i.yuexiaoke)
+        print(i.name, i.yuexiaoke, i.base_salary, i.Commission, i.bonus, i.ans)
 
 
 if __name__ == '__main__':
